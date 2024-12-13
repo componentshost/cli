@@ -11,16 +11,17 @@ export const login = new Command()
   .action(async () => {
     const spinner = ora("Authenticating with ComponentsHost...").start(); // Start loader animation
     try {
-      // Make the POST request using axios
-      const response = await axios.post("http://localhost:3000/api/cli/login", {
-        reqType: "request",
-      });
-      spinner.succeed("Authentication Session created successful!"); // Stop loader with success
-      const { id } = response.data;
       const url =
         process.env.NODE_ENV == "development"
           ? "http://localhost:3000"
           : "https://www.componentshost.com";
+      // Make the POST request using axios
+      const response = await axios.post(`${url}/api/cli/login`, {
+        reqType: "request",
+      });
+      spinner.succeed("Authentication Session created successful!"); // Stop loader with success
+      const { id } = response.data;
+
       const spinner2 = ora(
         `Please visit \x1b[4m${url}/cli/login/${id}\x1b[0m to authenticate. \n\n`,
       ).start();
