@@ -5,27 +5,29 @@ import { login } from "@/src/commands/login";
 // import { init } from "@/src/commands/init"
 import { Command } from "commander";
 
-import { DEPRECATED_MESSAGE } from "./deprecated";
-import { getPackageInfo } from "./utils/get-package-info";
+import { DEPRECATED_MESSAGE } from "./utils/deprecated";
+// import { getPackageInfo } from "./utils/get-package-info";
+import { add } from "./commands/add";
 
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));
 
 async function main() {
-  const packageInfo = getPackageInfo();
+  // const packageInfo = getPackageInfo();
 
   const program = new Command()
     .name("componentshost")
     .description("add components and dependencies to your project")
     .addHelpText("after", DEPRECATED_MESSAGE)
     .version(
-      packageInfo.version || "1.0.0",
+      "1.0.0",
       "-v, --version",
       "display the version number",
     );
 
-  program.addCommand(login);
-  // .addCommand(add).addCommand(diff)
+  program.addCommand(login)
+    .addCommand(add)
+  // .addCommand(diff)
 
   program.parse();
 }

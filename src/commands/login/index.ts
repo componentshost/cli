@@ -32,7 +32,7 @@ export const login = new Command()
             reqType: "checking",
           });
           if (checkResponse.data.status === "success") {
-            const { user, token } = checkResponse.data;
+            const { registry_url=url, user, token } = checkResponse.data;
             const configDir = path.join(os.homedir(), ".componentshost");
             const configFile = path.join(configDir, "config");
             // Ensure the directory exists
@@ -43,7 +43,7 @@ export const login = new Command()
             // Write the token to the config file
             fs.writeFileSync(
               configFile,
-              `TOKEN=${token}\nID=${user?.id}\nname='${user?.name}'`,
+              `TOKEN=${token}\nID=${user?.id}\nNAME='${user?.name}\nCOMPONENTS_REGISTRY_URL=${registry_url}'`,
               "utf8",
             );
             spinner2.succeed("Authentication confirmed!");
